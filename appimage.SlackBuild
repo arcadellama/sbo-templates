@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Slackware build script for FreeCAD.
+# Slackware build script for appname.
 #
-# Copyright 2019 Daniel Prosser, Lexington Park, MD, USA
+# Copyright 2021 Justin Teague <arcadellama@posteo.net> 
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,11 +22,11 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-PRGNAM=FreeCAD
-VERSION=${VERSION:-0.18.16131}
+PRGNAM=appname
+VERSION=${VERSION:-1}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_mntg}
-IMAGE=${IMAGE:-FreeCAD_0.18-16131-Linux-Conda_Py3Qt5_glibc2.12-x86_64.AppImage}
+TAG=${TAG:-_SBo}
+IMAGE=${IMAGE:-$PRGNAM_$VERSION.AppImage}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -61,17 +61,17 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-install -m 755 $CWD/$IMAGE $PKG/opt/$PRGNAM
+install -m 755 $CWD/$IMAGE $PKG/usr/lib/$PRGNAM
 # Note: do not strip the executable as usual, because the AppImage will no
 # longer work.
 
 # Create links /usr/bin
 mkdir -p $PKG/usr/bin
-ln -s /opt/FreeCAD/$IMAGE $PKG/usr/bin/FreeCAD
+ln -s /usr/lib/$PRGNAM/$IMAGE $PKG/usr/bin/$PRGNAM
 
 # Copy icon, desktop file and mime info
 mkdir -p $PKG/usr/share/applications $PKG/usr/share/pixmaps $PKG/usr/share/mime/packages
-cp $CWD/freecad.xpm $PKG/usr/share/pixmaps/
+cp $CWD/$PRGNAM.xpm $PKG/usr/share/pixmaps/
 cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 cat $CWD/$PRGNAM.xml > $PKG/usr/share/mime/packages/$PRGNAM.xml
 
